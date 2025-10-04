@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Furkan Şahin | Portföy</title>
+  <meta name="description" content="Furkan Şahin – 3. sınıf Bilgisayar Mühendisliği öğrencisi. HTML/CSS, Python ve veri analizi odaklı portföy.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1:#0a1a2f; --bg2:#0d2747;
+      --accent:#7aa8ff; --accent-2:#6cf3ff;
+      --text:#ecf3ff; --muted:#aec3ffcc;
+      --shadow:0 20px 70px rgba(10,30,60,.45);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Arial; color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 70% -10%, #1b3d74 0%, transparent 60%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
+      overflow-x:hidden;
+    }
+
+    /* Arka plan katmanları */
+    #codeTex, #netbg, #glowlayer{
+      position:fixed; inset:0; z-index:-3; display:block; pointer-events:none;
+    }
+    #netbg{ z-index:-2 }
+    #glowlayer{
+      z-index:-1;
+      background:
+        radial-gradient(60vmax 40vmax at 80% 20%, rgba(120,170,255,.25), transparent 60%),
+        radial-gradient(40vmax 30vmax at 20% 80%, rgba(108,243,255,.18), transparent 60%);
+      filter: blur(30px);
+      animation: floatGlow 14s ease-in-out infinite alternate;
+    }
+    @keyframes floatGlow{ to{ transform: translate3d(0,-20px,0) scale(1.02); filter: blur(40px);} }
+
+    header{
+      position:fixed; top:0; left:0; right:0; z-index:10;
+      backdrop-filter: blur(8px);
+      background:linear-gradient(to bottom, rgba(7,18,35,.75), rgba(7,18,35,.35));
+      border-bottom:1px solid rgba(122,168,255,.15);
+    }
+    .nav{ max-width:1100px; margin:auto; display:flex; align-items:center; justify-content:space-between; padding:12px 20px; }
+    .logo{ font-weight:800; letter-spacing:.5px; }
+    nav a{ color:var(--muted); text-decoration:none; margin-left:18px; font-weight:600; font-size:.95rem; }
+    nav a:hover{ color:var(--text); }
+
+    main{ max-width:1100px; margin:0 auto; padding: 120px 20px 80px; }
+
+    .hero{ display:grid; grid-template-columns: 1.2fr .8fr; gap:30px; align-items:center; min-height:70vh; }
+    .hero h1{ font-size:clamp(36px,5vw,64px); line-height:1.05; margin:.2rem 0 .6rem; }
+    .hero p.lead{ color:var(--muted); font-size:1.05rem; }
+
+    .card{ background: linear-gradient(180deg, rgba(16,40,82,.55), rgba(12,28,58,.55)); border:1px solid rgba(122,168,255,.15); border-radius:22px; box-shadow:var(--shadow); padding:24px; }
+    .cta-row{ display:flex; gap:14px; margin-top:22px; flex-wrap:wrap; }
+    .btn{ border:0; padding:12px 18px; border-radius:14px; font-weight:700; letter-spacing:.3px; cursor:pointer; }
+    .btn-primary{ background:linear-gradient(135deg, var(--accent), var(--accent-2)); color:#0b1530; }
+    .btn-ghost{ background:transparent; border:1px solid rgba(122,168,255,.35); color:var(--text); }
+
+    .hero-visual{ position:relative; height:360px; border-radius:28px;
+      background: radial-gradient(220px 160px at 60% 30%, rgba(122,168,255,.65), transparent 60%),
+                  linear-gradient(160deg, rgba(10,26,47,.7), rgba(12,32,61,.7));
+      border:1px solid rgba(122,168,255,.2); box-shadow: var(--shadow); overflow:hidden; }
+    .orbit{ position:absolute; inset:0; display:grid; place-items:center; }
+    .dot{ width:12px; height:12px; border-radius:50%; background:var(--accent-2); box-shadow: 0 0 18px 6px rgba(108,243,255,.6); animation: circle 10s linear infinite; position:absolute; }
+    .dot:nth-child(2){ width:10px; height:10px; background:var(--accent); box-shadow: 0 0 14px 5px rgba(122,168,255,.6); animation-duration: 14s; }
+    @keyframes circle{ from{ transform: rotate(0) translateX(120px) rotate(0);} to{ transform: rotate(360deg) translateX(120px) rotate(-360deg);} }
+
+    section{ margin-top:80px; }
+    h2{ font-size: clamp(22px,3vw,34px); margin:0 0 14px; }
+    .muted{ color:var(--muted); }
+
+    .grid{ display:grid; gap:22px; grid-template-columns: repeat(12,1fr); }
+    .span-7{ grid-column: span 7; }
+    .span-5{ grid-column: span 5; }
+
+    .skills{ display:grid; gap:16px; }
+    .skill{ background:rgba(12,32,61,.6); border:1px solid rgba(122,168,255,.15); border-radius:16px; padding:14px 14px 10px; }
+    .skill-header{ display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+    .bar{ height:10px; background:linear-gradient(90deg, rgba(122,168,255,.25), rgba(108,243,255,.25)); border-radius:999px; overflow:hidden; }
+    .bar > span{ display:block; height:100%; width:0%; background:linear-gradient(90deg, var(--accent), var(--accent-2)); border-radius:inherit; box-shadow:0 0 12px rgba(122,168,255,.6); transition: width 1200ms cubic-bezier(.2,.7,.2,1); }
+
+    .goals{ display:grid; gap:16px; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); }
+    .goal{ background:rgba(12,32,61,.6); border:1px solid rgba(122,168,255,.15); border-radius:16px; padding:16px; min-height:120px; }
+    .goal h3{ margin:0 0 6px; font-size:1.05rem; }
+
+    footer{ margin-top:80px; padding:30px 0 60px; text-align:center; color:var(--muted); border-top:1px dashed rgba(122,168,255,.18); }
+
+    @media (max-width: 980px){
+      .hero{ grid-template-columns:1fr; }
+      .grid{ grid-template-columns:1fr; }
+      .span-7,.span-5{ grid-column:1/-1; }
+      .hero-visual{ height:260px; }
+    }
+    @media (prefers-reduced-motion: reduce){
+      #netbg, #glowlayer{ animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Arka plan katmanları -->
+  <canvas id="codeTex" aria-hidden="true"></canvas>
+  <canvas id="netbg" aria-hidden="true"></canvas>
+  <div id="glowlayer" aria-hidden="true"></div>
+
+  <header>
+    <div class="nav">
+      <div class="logo">Furkan<span style="color:var(--accent-2)">Şahin</span></div>
+      <nav>
+        <a href="#hakkimda">Hakkımda</a>
+        <a href="#yetenekler">Yetenekler</a>
+        <a href="#hedefler">Hedefler</a>
+        <a href="#cv">CV</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <div class="card" style="padding:26px 26px 30px;">
+          <span class="muted" style="font-weight:600; letter-spacing:.2em; text-transform:uppercase;">Merhaba, ben</span>
+          <h1>Furkan Şahin</h1>
+          <p class="lead">3. sınıf <strong>Bilgisayar Mühendisliği</strong> öğrencisiyim. HTML & CSS ile arayüz geliştirmeyi seviyorum, <strong>Python</strong> ile özellikle <strong>veri analizi</strong> tarafında kendimi geliştiriyorum. Bu sayfada biyografimi, yeteneklerimi ve hedeflerimi bulabilirsiniz.</p>
+          <div class="cta-row">
+            <a id="cv" class="btn btn-primary" href="#" target="_blank" rel="noopener">CV’mi İndir (PDF)</a>
+            <a class="btn btn-ghost" href="#yetenekler">Yeteneklerime göz at</a>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="orbit">
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="hakkimda" class="grid">
+      <div class="span-7">
+        <h2>Hakkımda</h2>
+        <div class="card">
+          <p>Ben Furkan, teknolojiyle üretmeyi seven bir bilgisayar mühendisi adayıyım. Front-end tarafında <strong>HTML/CSS</strong> ile sezgisel arayüzler oluşturmaya, back-end tarafında ise <strong>Python</strong> ile veri analizi ve otomasyon işlerine meraklıyım.</p>
+          <p>Bu portföy; projelerimi, yetenek seviyemi ve kısa vadeli hedeflerimi özetler. Görsel efektler ve küçük animasyonlarla birlikte, sade ama modern bir deneyim sunmayı amaçladım.</p>
+        </div>
+      </div>
+      <div class="span-5">
+        <h2>Kısa Bilgiler</h2>
+        <div class="card">
+          <ul style="margin:0; padding-left:18px; line-height:1.9">
+            <li>Üniversite: Bilgisayar Mühendisliği (3. sınıf)</li>
+            <li>İlgi Alanları: Veri Analizi, Web Geliştirme</li>
+            <li>Araçlar: VS Code, Git/GitHub</li>
+            <li>Diller: Türkçe, İngilizce (teknik okuma)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="yetenekler">
+      <h2>Yeteneklerim</h2>
+      <p class="muted">Aşağıdaki seviyeler öz değerlendirmedir ve projelerle sürekli güncellenir.</p>
+      <div class="card">
+        <div class="skills">
+          <div class="skill" data-level="70">
+            <div class="skill-header"><strong>Python</strong><span class="muted">Orta Seviye</span></div>
+            <div class="bar"><span></span></div>
+          </div>
+          <div class="skill" data-level="60">
+            <div class="skill-header"><strong>HTML & CSS</strong><span class="muted">İlgileniyorum / Orta-</span></div>
+            <div class="bar"><span></span></div>
+          </div>
+          <div class="skill" data-level="50">
+            <div class="skill-header"><strong>Java</strong><span class="muted">Temel-Orta</span></div>
+            <div class="bar"><span></span></div>
+          </div>
+          <div class="skill" data-level="60">
+            <div class="skill-header"><strong>Veri Analizi</strong><span class="muted">Başlangıç-Orta</span></div>
+            <div class="bar"><span></span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="hedefler">
+      <h2>IT Tarafında Basit Hedeflerim</h2>
+      <div class="goals">
+        <div class="goal">
+          <h3>Python ile Veri Analizi</h3>
+          <p class="muted">Pandas & NumPy ile veri temizleme, Matplotlib ile temel görselleştirme; küçük veri setleri üzerinde mini projeler.</p>
+        </div>
+        <div class="goal">
+          <h3>Web Arayüzleri</h3>
+          <p class="muted">HTML/CSS pratikleri, modern layout (Flex/Grid), basit etkileşimler için vanilla JS.</p>
+        </div>
+        <div class="goal">
+          <h3>Versiyon Kontrol</h3>
+          <p class="muted">Git akışını oturtmak, GitHub’da proje yönetimi ve açıklayıcı README’ler yazmak.</p>
+        </div>
+        <div class="goal">
+          <h3>Portföy Geliştirme</h3>
+          <p class="muted">Bu sayfayı yeni projeler, blog yazıları ve CV güncellemeleriyle canlı tutmak.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <small>© <span id="year"></span> Furkan Şahin • Portföy</small>
+    </footer>
+  </main>
+
+  <script>
+    // Yumuşak kaydırma
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        const id=a.getAttribute('href').slice(1);
+        const el=document.getElementById(id);
+        if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'}); }
+      });
+    });
+
+    // Yetenek barları görünce doldur
+    const io=new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.querySelector('.bar > span').style.width = entry.target.dataset.level + '%';
+          io.unobserve(entry.target);
+        }
+      });
+    },{threshold:.35});
+    document.querySelectorAll('.skill').forEach(s=>io.observe(s));
+
+    // Yıl
+    document.getElementById('year').textContent=new Date().getFullYear();
+
+    // 1) KOD DOKUSU (çok düşük opaklıkta yavaş akar)
+    const tex=document.getElementById('codeTex');
+    const tctx=tex.getContext('2d');
+    const codeLines=[
+      'def fetch_data():','  import requests','  r = requests.get(url)','  return r.json()',
+      'for(i=0;i<n;i++){ sum+=arr[i]; }','SELECT id, name FROM users WHERE active=1;',
+      'const app = () => console.log("hello");','if (x > 0) { doThing(); }',
+      '<div class="card">','</div>','class Node { constructor(v){this.v=v;} }',
+      'try: do_work(); except Exception as e: print(e)'
+    ];
+    let texW,texH,offY=0,dp1=1;
+    function resizeTex(){
+      dp1=window.devicePixelRatio||1;
+      texW=tex.width=Math.floor(innerWidth*dp1);
+      texH=tex.height=Math.floor(innerHeight*dp1);
+      tctx.setTransform(dp1,0,0,dp1,0,0);
+      tctx.font='14px monospace';
+      tctx.textBaseline='top';
+    }
+    function drawTex(){
+      tctx.fillStyle='rgba(5,12,25,0.20)';
+      tctx.fillRect(0,0,texW,texH);
+      const lineH=18, columns=Math.ceil(innerWidth/320);
+      for(let c=0;c<columns;c++){
+        for(let i=0;i<Math.ceil((texH+60)/lineH);i++){
+          const y=((i*lineH)+(offY%lineH))-lineH;
+          const x=c*320+(c%2?40:0);
+          const text=codeLines[(i+c)%codeLines.length];
+          tctx.fillStyle=(i%7===0)?'rgba(108,243,255,0.10)':'rgba(122,168,255,0.08)';
+          tctx.fillText(text,x,y);
+        }
+      }
+      offY+=0.3;
+      requestAnimationFrame(drawTex);
+    }
+
+    // 2) PARÇACIK AĞI
+    const net=document.getElementById('netbg');
+    const ctx=net.getContext('2d');
+    let W,H,DPR=1;
+    const PARTICLE_COUNT=Math.min(120,Math.floor(window.innerWidth*0.12));
+    const LINK_DIST=140;
+    const SPEED_MIN=0.15,SPEED_MAX=0.45;
+    const particles=[];
+    const mouse={x:-9999,y:-9999};
+    function rand(a,b){return a+Math.random()*(b-a);}
+    function spawn(){return{ x:Math.random()*innerWidth, y:Math.random()*innerHeight,
+      vx:rand(-SPEED_MAX,SPEED_MAX)||SPEED_MIN, vy:rand(-SPEED_MAX,SPEED_MAX)||SPEED_MIN, r:rand(1.1,2.2)};}
+    function resize(){
+      DPR=window.devicePixelRatio||1;
+      W=net.width=Math.floor(innerWidth*DPR);
+      H=net.height=Math.floor(innerHeight*DPR);
+      ctx.setTransform(DPR,0,0,DPR,0,0);
+      particles.length=0;
+      for(let i=0;i<PARTICLE_COUNT;i++) particles.push(spawn());
+      resizeTex();
+    }
+    function step(){
+      ctx.fillStyle='rgba(5,12,25,0.35)';
+      ctx.fillRect(0,0,W,H);
+      for(const p of particles){
+        p.x+=p.vx; p.y+=p.vy;
+        if(p.x<0||p.x>innerWidth) p.vx*=-1;
+        if(p.y<0||p.y>innerHeight) p.vy*=-1;
+        ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle='rgba(108,243,255,0.9)'; ctx.shadowBlur=8; ctx.shadowColor='rgba(108,243,255,0.7)'; ctx.fill();
+      }
+      ctx.shadowBlur=0;
+      for(let i=0;i<particles.length;i++){
+        for(let j=i+1;j<particles.length;j++){
+          const a=particles[i], b=particles[j];
+          const dx=a.x-b.x, dy=a.y-b.y, d=Math.hypot(dx,dy);
+          if(d<LINK_DIST){
+            const alpha=1-(d/LINK_DIST);
+            ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y);
+            ctx.strokeStyle=`rgba(122,168,255,${0.35*alpha})`; ctx.lineWidth=1; ctx.stroke();
+          }
+        }
+      }
+      for(const p of particles){
+        const dx=p.x-mouse.x, dy=p.y-mouse.y, d=Math.hypot(dx,dy);
+        if(d<140){ p.x+=dx*0.005; p.y+=dy*0.005; }
+      }
+      requestAnimationFrame(step);
+    }
+    window.addEventListener('resize',resize);
+    window.addEventListener('mousemove',e=>{mouse.x=e.clientX; mouse.y=e.clientY;});
+    window.addEventListener('mouseleave',()=>{mouse.x=-9999; mouse.y=-9999;});
+
+    // Başlat
+    resize(); drawTex(); step();
+
+    // CV linkini kendi PDF yolunla güncelle:
+    // document.getElementById('cv').href = 'assets/Furkan_Sahin_CV.pdf';
+  </script>
+</body>
+</html>
